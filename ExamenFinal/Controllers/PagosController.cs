@@ -32,5 +32,33 @@ namespace ExamenFinal.Controllers
             await _context.SaveChangesAsync();
             return Ok(pago);
         }
+
+        // PUT: api/pagos/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPago(int id, Pago pago)
+        {
+            if (id != pago.PagoId)
+                return BadRequest();
+
+            _context.Entry(pago).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/pagos/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePago(int id)
+        {
+            var pago = await _context.Pagos.FindAsync(id);
+            if (pago == null)
+                return NotFound();
+
+            _context.Pagos.Remove(pago);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }
